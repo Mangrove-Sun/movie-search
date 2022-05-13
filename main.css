@@ -1,0 +1,28 @@
+input {
+  display: block;
+  margin: 0 auto;
+}
+button {
+  display: block;
+  margin: 0 auto;
+}
+li {
+  list-style: none;
+}
+ul {
+  width: 1060px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, 200px);
+  row-gap: 15px;
+  column-gap: 15px;
+}  
+li {
+  
+  
+}
+li img {
+  width: 200px;
+  height: 100%;
+  
+}
