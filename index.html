@@ -6,13 +6,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Movie Search site</title>
 
-  <link rel="stylesheet" href="./main.css">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+  <!-- CSS Reset -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
+  <link rel="stylesheet" href="./main.css" />
   <script defer src="./main.js"></script>
 </head>
 <body>
-  <input type="text" value="frozen" />
-  <button class="search-btn">Search!</button>
-  <ul></ul>
-  <button class="more-btn">More..</button>
+  <header>
+    <div class="inner">
+
+      <a href="/">SUNFLIX</a>
+
+    </div>
+  </header>
+  <!-- 영화 검색 영역 -->
+  <section class="search">
+    <div class="inner">
+
+      <p>보고싶은 영화를 검색 해보세요.</p>
+      <div class="search-area">
+        <input type="text" placeholder="영화, 시리즈" />
+        <button class="search-btn material-icons">search</button>
+      </div>
+      
+    </div>
+  </section>
+  <!-- 영화 검색 결과 출력 -->
+  <section class="result">
+
+    
+  </section>
+  <div class="more-btn-area">
+    <button class="more-btn on">More Movies</button>
+    <div class="loader">Loading..</div>
+  </div>
+  
 </body>
 </html>
