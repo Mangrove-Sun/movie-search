@@ -19,8 +19,8 @@ button {
 }
 .inner{
   position: relative;
-  width: 1200px;
-  margin: 0 auto;
+  /* width: 1200px;
+  margin: 0 auto; */
 }
 header {
   background: linear-gradient(#060606, #141414);
@@ -30,7 +30,9 @@ section {
 }
 
 
+/* HEADER */
 header .inner {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,27 +44,30 @@ header .inner a {
   font-weight: 700;
   color: #E50914
 }
+/* //HEADER */
 
 
-section.search {}
+/* SECTION SEARCH */
 section.search .inner {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   align-content: space-between;
   flex-direction: column;
   margin-top: 70px;
-
+  padding-bottom: 30px;
+  border-bottom: 1px solid #4e4e4e;
 }
 section.search .inner p:first-child {
-  
   font-size: 4em;
   color: #fff;
 }
 section.search .inner .search-area {
   display: flex;
   position: relative;
-  width: 560px;
+  width: 80%;
+  max-width: 560px;
   height: 45px;
   margin-top: 60px;
 }
@@ -86,24 +91,26 @@ section.search .inner .search-area button {
   border-radius: 25px;
   background-color: transparent;
 }
-section.search .inner p.search-result-area {
+section.search .inner p.search-info-area {
   display: none;
   height: 100%;
   margin: 25px 0 15px 0;
   font-size: 1.6em;
   color: #b3b3b3;
 }
-section.search .inner p.search-result-area.on {
+section.search .inner p.search-info-area.on {
   display: block;
 }
-section.result {}
+/* //SECTION SEARCH */
+/* SECTION RESULT */
 section.result .inner {
-  margin-top: 80px;
-  padding: 30px 0 20px 0;
+  width: 100%;
+  margin-top: 40px;
+  padding: 30px 0;
 }
 section.result ul {
   width: 90%;
-  /* margin: 30px auto; */
+  margin: 30px auto;
   /* padding: 0 50px; */
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
@@ -116,20 +123,23 @@ section.result ul li {
 section.result ul li img {
   width: 100%;
   height: 100%;
+  transition: all .5s;
 }
+section.result ul li img:hover {
+  transform: scale(1.1);
+}
+/* //SECTION RESULT */
+/* MORE BUTTON */
 .more-btn-area {
-  display: none;
-}
-.more-btn-area.on {
   background-color: #141414;
 }
 .more-btn-area .inner {
   padding: 40px 0;
 }
-.more-btn-area button.more-btn{
+.more-btn-area .inner button.more-btn{
   display: none;
 }
-.more-btn-area button.more-btn.on {
+.more-btn-area .inner button.more-btn.on {
   display: block;
   margin-top: 30px;
   padding: 10px 0;
@@ -141,7 +151,7 @@ section.result ul li img {
 }
 .more-btn-area .inner .loader {
   display: none;
-  padding: 70px 0 30px 0;
+  padding: 30px 0 30px 0;
   height: 70px;
 }
 .more-btn-area .inner .loader.on {
@@ -162,7 +172,7 @@ section.result ul li img {
 .more-btn-area .inner .loader p {
   text-indent: -9999px;
 }
-
+/* //MORE BUTTON */
 
 
 
