@@ -1,61 +1,103 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movie Search site</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Search site</title>
 
-  <!-- Material Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- Material Icons -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
 
-  <!-- CSS Reset -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
-  <link rel="stylesheet" href="./main.css" />
-  <script defer src="./main.js"></script>
-</head>
-<body>
-  <header>
-    <div class="inner">
-
-      <a href="/">SUNFLIX</a>
-
-    </div>
-  </header>
-  <!-- 영화 검색 영역 -->
-  <section class="search">
-    <div class="inner">
-
-      <p>보고싶은 영화를 검색 해보세요.</p>
-      <div class="search-area">
-        <input type="text"  placeholder="영화, 시리즈" />
-        <button class="search-btn material-icons" >search</button>
+    <!-- CSS Reset -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css"
+    />
+    <link rel="stylesheet" href="./main.css" />
+    <script defer src="./main.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="inner">
+        <a href="/">SUNFLIX</a>
       </div>
-      <p class="search-info-area">
-        "<span class="search-title"></span>" 를 검색한 결과
-        <span class="search-total"></span>개
-      </p>
+    </header>
+    <!-- 영화 검색 영역 -->
+    <section class="search">
+      <div class="inner">
+        <p>보고싶은 영화를 검색 해보세요.</p>
+        <div class="search-area">
+          <input
+            type="text"
+            placeholder="영화, 시리즈"
+            onkeyup="preventKrInput(event)"
+            onkeypress="javascript:if(event.keyCode == 13) {requestMovie()}"
+          />
+          <button class="search-btn material-icons" onclick="requestMovie()">
+            search
+          </button>
+        </div>
+      </div>
+    </section>
+    <!-- 영화 검색 결과 출력 -->
+    <section class="result">
+      <div class="inner">
+        <p class="search-info-area">
+          " <span class="search-title"></span> " 를 검색한 결과
+          <span class="search-total"></span>개
+        </p>
+      </div>
       
-    </div>
-  </section>
-  <!-- 영화 검색 결과 출력 -->
-  <section class="result">
-    <div class="inner">
+    </section>
 
-
-
-    </div>
-  </section>
-  <div class="more-btn-area">
-    <div class="inner">
-
-      <button class="more-btn">More Movies</button>
-      <div class="loader">
-        <p>Loading..</p>
+    <div id="popup">
+      <div class="popup-post-wrap">
+        <button type="button" class="popup_close-btn" title="Close">X</button>
+        <table class="post_detail">
+          <tbody>
+            <tr>
+              <th class="post_movie detail-post" rowspan=""></th>
+              <th class="post_movie detail-title" colspan=""></th>
+            </tr>
+            <tr>
+              <td class="post_movie detail-plot"></td>
+            </tr>
+            <tr>
+              <td class="post_movie detail-actors"></td>
+            </tr>
+            <tr>
+              <td class="post_movie detail-genre"></td>
+            </tr>
+            <tr>
+              <td class="post_movie detail-runtime"></td>
+            </tr>
+            <tr>
+              <td class="post_movie detail-released"></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
     </div>
-  </div>
-  
-</body>
+    <!-- MORE BUTTON & LOADING -->
+    <div class="more-movie-area">
+      <div class="inner">
+
+        <!-- 더 보기 버튼식 -->
+        <!-- <button class="more-movie-btn">More Movies</button> -->
+        <!-- 더 보기 무한 스크롤식 -->
+        <div class="intersection-area">
+          <div class="loader">
+            <p>Loading..</p>
+          </div>
+        </div>
+
+        
+      </div>
+    </div>
+  </body>
 </html>
+
