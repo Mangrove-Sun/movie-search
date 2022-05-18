@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Movie Search site</title>
 
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <!-- Material Icons -->
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -22,18 +24,47 @@
   </head>
   <body>
     <header>
-      <div class="inner">
+      <div class="inner logo">
         <a href="/">SUNFLIX</a>
+      </div>
+      <!-- FIXED AREA -->
+      <div class="header-fixed-wrap">
+        <div class="inner">
+
+          <div class="fixed-logo">
+            <a href="/">SUNFLIX</a>
+          </div>
+          <div class="fixed-search-area">
+            <input
+              type="text"
+              placeholder="영화, 시리즈를 검색 해보세요"
+              name="movie-search-bar"
+              onfocus="this.select()"
+              onkeyup="preventKrInput(event)"
+              onkeypress="javascript:if(event.keyCode == 13) {requestMovie()}"
+            />
+            <button class="search-btn material-icons" onclick="requestMovie()">
+              search
+            </button>            
+          </div>
+          <p class="search-info-area">
+            " <span class="search-title"></span> " 를 검색한 결과
+            <span class="search-total"></span>개
+          </p>
+
+        </div>
       </div>
     </header>
     <!-- 영화 검색 영역 -->
     <section class="search">
       <div class="inner">
-        <p>보고싶은 영화를 검색 해보세요.</p>
+        
         <div class="search-area">
           <input
             type="text"
-            placeholder="영화, 시리즈"
+            placeholder="영화, 시리즈를 검색 해보세요"
+            name="movie-search-bar"
+            onfocus="this.select()"
             onkeyup="preventKrInput(event)"
             onkeypress="javascript:if(event.keyCode == 13) {requestMovie()}"
           />
@@ -51,7 +82,9 @@
           <span class="search-total"></span>개
         </p>
       </div>
-      
+      <div class="not-found">
+        <span>Not found your keywords :-(</span>
+      </div>
     </section>
 
     <div id="popup">
@@ -104,10 +137,9 @@
             <p>Loading..</p>
           </div>
         </div>
-
-        
       </div>
     </div>
+    
   </body>
 </html>
 
