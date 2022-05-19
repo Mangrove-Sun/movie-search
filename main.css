@@ -21,16 +21,8 @@ button {
   position: relative;
   margin: 0 auto;
 }
-header {
-  
-}
 
-body .scroll-prevent {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
+
 /* HEADER */
 header {
   
@@ -105,7 +97,7 @@ header .header-fixed-wrap .inner .fixed-search-area button {
   background-color: transparent;
 }
 header .header-fixed-wrap .inner .search-info-area {
-  font-size: 1.5em;
+  font-size: 2em;
   text-align: right;
   vertical-align: middle;
   color: #cfcfcf;
@@ -207,7 +199,7 @@ section.result ul {
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-auto-rows: minmax(430px, 1fr);
+  grid-auto-rows: min(450px);
   row-gap: 80px;
   column-gap: 58px;
 } 
@@ -226,10 +218,18 @@ section.result ul li img {
   box-shadow: 0px 7px 13px #000;
   transition: all .5s;
 }
-section.result ul li img.defult-img {
-  background-image: url("./images/No-image.png");
+section.result ul li .default-img {
+  width: 100%;
+  height: 100%;
+  border: 3px solid #333334;
+  border-radius: 20px;
+  box-sizing: border-box;
+  box-shadow: 0px 7px 13px #000;
+  transition: all .5s;
+  background-image: url("./images/default.png");
   background-repeat: no-repeat;
-  background-size: 30%;
+  background-size: 90%;
+  background-position: center;
 }
 section.result ul li .post-cover {
   position: absolute;
@@ -258,7 +258,8 @@ section.result ul li .post-cover span {
 }
 /* section.result ul li:hover, */
 section.result ul li:hover img,
-section.result ul li:hover .post-cover {
+section.result ul li:hover .post-cover,
+section.result ul li:hover .default-img {
   transform: scale(1.06);
 }
 section.result ul li .post-cover:hover{
@@ -320,6 +321,7 @@ section.result ul li .post-cover:hover span {
   width: 45vw;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
+  background-color: #141414;
   overflow: hidden;
 }
 #popup .popup-poster-wrap .popup-poster-area .poster-area img.detail-poster {
@@ -330,6 +332,7 @@ section.result ul li .post-cover:hover span {
 #popup .popup-poster-wrap .popup-poster-area .poster_detail {
   width: 60vw;
   height: 100%;
+  background: #242424;
 }
 #popup .popup-poster-wrap .popup-poster-area .poster_detail .poster {
   position: relative;

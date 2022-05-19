@@ -29,14 +29,17 @@ function totalPage(total) {
 // 최신 검색값 찾기
 function lastSearch(section, header){
   let search = '';
-  if (header <= section ) {
+  // if ( searchInputEl.value.trim() == '' &&  headerInputEl.value.trim() !== '' ) searchInputEl.value = headerInputEl.value;
+  if ( header < section ) {
     headerInputEl.value = searchInputEl.value;
+    search = searchInputEl.value;
+  } else if ( header == section ) {
     search = searchInputEl.value;
   } else {
     searchInputEl.value = headerInputEl.value;
     search = headerInputEl.value;
   }
-  return search;
+  return search.trim();
 }
 // 검색한 영화 결과 없을 때
 function noMovie() {
@@ -69,6 +72,7 @@ const headerTotalResultsEl = document.querySelector('.header-fixed-wrap .search-
 
 const notFoundEl = document.querySelector('.result .not-found');
 
+let searchValue = '';
 let page = 1;
 let totalpages = 0;
 let movieIds = [];
@@ -78,6 +82,8 @@ let sectionSearch = 0;
 
 // 인라인 방식
 async function requestMovie() {
+   // 검색할 값 지정
+  searchValue = lastSearch(sectionSearch, headerSearch);
   if (searchInputEl.value.trim() == '' || searchInputEl.value.trim() == ' ') return searchInputEl.value = '';
   ulEl.innerHTML = '';
   notFoundEl.classList.remove('on');
@@ -85,28 +91,33 @@ async function requestMovie() {
   dataLoadingEl.classList.add('on');
   page = 1;
   movieIds = [];
-  // 검색할 값 지정
-  const searchMovie = await lastSearch(sectionSearch, headerSearch);
-  const movies = await getMovie(searchMovie, page);
-  page = 2;
 
+  const movies = await getMovie(searchValue, page);
+  page = 2;
   const { Search, totalResults } = movies;
   if ( totalResults == undefined ) return noMovie();
   const total = parseInt(totalResults);
 
-  
   searchInfoOn(searchInputEl, total);
   totalPage(total);
   
-  
   Search.forEach(movie => {
     const liEl = document.createElement('li');
-    liEl.innerHTML = /* html */`
-      <img id="${movie.imdbID}" src="${movie.Poster}" alt="${movie.Title}" />
-      <div class="post-cover">
-        <span>View More</span>
-      </div>
-    `;
+    if ( movie.Poster == 'N/A' ) {
+      liEl.innerHTML = /* html */`
+        <div id="${movie.imdbID}" class="default-img ${movie.Title.split(' ').join('-')}"></div>
+        <div class="post-cover">
+          <span>View More</span>
+        </div>
+      `;
+    } else {
+      liEl.innerHTML = /* html */`
+        <img id="${movie.imdbID}" src="${movie.Poster}" alt="${movie.Title}" />
+        <div class="post-cover">
+          <span>View More</span>
+        </div>
+      `;
+    }
     ulEl.append(liEl);
     dataLoadingEl.classList.remove('on');
     searchResultAreaEl.append(ulEl);
@@ -165,20 +176,31 @@ async function requestMovie() {
 
 // 영화 더 요청하기
 async function moreMovie() {
-  if ( page === 1 || page > totalpages) return; // page가 1이거나 총페이지보다 크면 moreMovie() 종료
-  dataLoadingEl.classList.add('on');
-  const movies = await getMovie(searchInputEl.value, page);
+  if ( page === 1 || page > totalpages) return dataLoadingEl.classList.remove('on'); // page가 1이거나 총페이지보다 크면 moreMovie() 종료
+
+  const movies = await getMovie(searchValue, page);
+
   page += 1;
 
   const { Search } = movies;
+
   Search.forEach(movie => {
     const liEl = document.createElement('li');
-    liEl.innerHTML = /* html */`
-      <img id="${movie.imdbID}" src="${movie.Poster}" alt="${movie.Title}" />
-      <div class="post-cover">
-        <span>View More</span>
-      </div>
-    `;
+    if ( movie.Poster == 'N/A' ) {
+      liEl.innerHTML = /* html */`
+        <div id="${movie.imdbID}" class="default-img ${movie.Title.split(' ').join('-')}"></div>
+        <div class="post-cover">
+          <span>View More</span>
+        </div>
+      `;
+    } else {
+      liEl.innerHTML = /* html */`
+        <img id="${movie.imdbID}" src="${movie.Poster}" alt="${movie.Title}" />
+        <div class="post-cover">
+          <span>View More</span>
+        </div>
+      `;
+    }
     ulEl.append(liEl);
     dataLoadingEl.classList.remove('on');
     searchResultAreaEl.append(ulEl);
@@ -187,7 +209,7 @@ async function moreMovie() {
   findSpanEls()
 }
 
-// 최신 검색값 찾기 - 검색 시 검색영역 count
+// 최신 검색값 찾기 - 검색 시 += 1
 searchInputEl.addEventListener('keydown', (e) => {
   if ( e.keyCode == 13 ) {
     sectionSearch += 1;
@@ -204,6 +226,7 @@ headerInputEl.addEventListener('keydown', (e) => {
 headerBtnEl.addEventListener('click', () => {
   headerSearch += 1;
 })
+
 
 const popUpPostImgEl = document.querySelector('#popup .popup-poster-wrap .poster-area .detail-poster');
 const popUpTitleEl = document.querySelector('#popup .popup-poster-wrap .poster_detail .detail-title');
@@ -238,9 +261,9 @@ async function findSpanEls() {
     })
   })
 }
+// POPUP CLOSE
 popUpCloseBtnEl.addEventListener('click', () => {
   popUpEl.classList.remove('on');
-  document.body.classList.remove('scroll-prevent');
 });
 
 // 한글 입력 방지
@@ -257,11 +280,16 @@ function preventKrInput(event) {
 const intersectionEl = document.querySelector('.more-movie-area');
 const botOptions = {
   root: null, // 기본값(null), 뷰포트를 기준
-  rootMargin: '-800px 0px 0px 0px', // 교차화면 박스 크기(상, 우, 하, 좌, 순서) / 기준은 뷰포트 기준
-  threshold: 0.9 // 0.8 만큼의 영역이 교차(보이면)되면 observer실행 / 교차범위영역 0.0 ~ 1.0 값
+  rootMargin: '-800px 0px -10px 0px', // 교차화면 박스 크기(상, 우, 하, 좌, 순서) / 기준은 뷰포트 기준
+  // threshold: 0.9 // 0.8 만큼의 영역이 교차(보이면)되면 observer실행 / 교차범위영역 0.0 ~ 1.0 값
 }
 const bottom = new IntersectionObserver(entry => {
-  if ( entry[0].intersectionRatio >= 0.9 ) return moreMovie();
+  if ( entry[0].isIntersecting) {
+    dataLoadingEl.classList.add('on');
+    setTimeout(() => {
+      moreMovie();
+    }, 1000)
+  }
 }, botOptions);
 
 bottom.observe(intersectionEl);
